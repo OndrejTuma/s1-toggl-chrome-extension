@@ -1,0 +1,7 @@
+body.credentials #register,
+body #actions {
+  display: none;
+}
+body.credentials #actions {
+  display: block;
+}

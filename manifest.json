@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+
+  "name": "Redmine-toggl-S1 integration",
+  "description": "This extension will start tracking a Redmine task in toggl. Works for SiteOne",
+  "version": "1.0",
+
+  "action": {
+    "default_icon": {
+      "16": "icons/icon-16x16.png",
+      "32": "icons/icon-32x32.png",
+      "72": "icons/icon-72x72.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "MacCtrl+Shift+S"
+      },
+      "description": "Opens popup.html"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "32": "icons/icon-32x32.png",
+    "72": "icons/icon-72x72.png"
+  },
+  "permissions": ["storage", "activeTab", "scripting"]
+}
