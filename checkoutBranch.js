@@ -30,6 +30,10 @@ function getProjectworkingDir(projectId, projectWorkingDirs) {
 
 
 chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => {
+  const microserviceConfig = {
+    url: 'http://localhost',
+    port: 8123
+  }
   const projectNode = document.getElementById('projectId')
   const projectId = projectNode ? parseInt(projectNode.innerHTML) : 0
 
@@ -72,7 +76,7 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
   const branchName = `feat/${taskNumber}/${slugify(taskSubject)}`
 
   try {
-    const res = await fetch('http://localhost:8123/api/branches', {
+    const res = await fetch(`${microserviceConfig.url}:${microserviceConfig.port}/api/branches`, {
       method: 'POST',
       body: JSON.stringify({
         branchName,
@@ -80,8 +84,19 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
       }),
     })
 
-    if (res.status === 400) {
+    if (!res.ok) {
+      if (res.status >= 500) {
+        alert(`Server is not responding. Make sure its up and running.\n(${microserviceConfig.url}:${microserviceConfig.port})`)
+      } else if (res.status === 400) {
+        const resData = await res.json()
 
+        alert('Request failed:\n' + resData.message)
+      } else {
+        alert('Request failed. Check console for more info')
+        console.log(res)
+      }
+
+      return
     }
 
     const resData = await res.json()
