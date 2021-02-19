@@ -63,10 +63,10 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
   const taskNumber = window.location.toString().replace(/^.*issues\/([0-9]+).*$/, '$1')
   const taskSubjectNode = document.getElementById('issue_subject')
 
-  let taskSubject = taskSubjectNode ? taskSubjectNode.value.replace(new RegExp('^\#\d{5}[\-:, ]*', 'i'), '') : ''
+  let taskSubject = taskSubjectNode ? taskSubjectNode.value.replace(/\#\d{5}[\-:, ]*/g, '') : ''
 
   if (!taskSubject) {
-    taskSubject = prompt('Missing task subject. Add taks subject which will be converted to branch name:')
+    taskSubject = prompt('Missing task subject. Add task subject which will be converted to branch name:')
   }
 
   if (!taskSubject) {
