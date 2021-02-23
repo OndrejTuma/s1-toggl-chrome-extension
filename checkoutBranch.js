@@ -85,9 +85,7 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
     })
 
     if (!res.ok) {
-      if (res.status >= 500) {
-        alert(`Server is not responding. Make sure its up and running.\n(${microserviceConfig.url}:${microserviceConfig.port})`)
-      } else if (res.status === 400) {
+      if (res.status === 400) {
         const resData = await res.json()
 
         alert('Request failed:\n' + resData.message)
@@ -107,6 +105,8 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
       alert('Error occured. Check microservice logs. ' + JSON.stringify(resData, null, 2))
     }
   } catch (e) {
+    alert(`Server is not responding. Make sure its up and running.\n(${microserviceConfig.url}:${microserviceConfig.port})`)
+
     console.log(e)
   }
 })
