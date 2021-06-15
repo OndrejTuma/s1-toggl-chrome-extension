@@ -6,5 +6,5 @@ local git via this extension
 
 ### TODO
 
-- fix redmine regex so double slashes pass the check (happens many times)
-- allow administration of (project - working dir) pairs
+- [x] fix redmine regex so double slashes pass the check (happens many times)
+- [ ] allow administration of (project - working dir) pairs

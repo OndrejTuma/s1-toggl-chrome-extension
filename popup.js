@@ -3,7 +3,7 @@ chrome.storage.sync.get('credentials', async ({ credentials }) => {
 })
 
 function isRedmineTaskUrl(url) {
-  if (url.match(/https:\/\/task.siteone.cz\/issues\/\d{5,}/)) {
+  if (url.match(/https:\/\/task.siteone.cz\/(\/)?issues\/\d{5,}/)) {
     return true
   }
 
