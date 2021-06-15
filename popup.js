@@ -36,6 +36,10 @@ window.addEventListener('load', async function () {
     })
   })
 
+  document.getElementById('showDirList').addEventListener('click', async function () {
+    listDirectories()
+  })
+
   document.getElementById('checkoutBranch').addEventListener('click', function () {
     if (!isRedmineTaskUrl(tab.url)) {
       return
@@ -48,3 +52,45 @@ window.addEventListener('load', async function () {
   })
 })
 
+
+
+// MANAGE DIRECTORIES
+
+function listDirectories() {
+  chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => {
+    printDirectories(projectWorkingDirs)
+  })
+}
+function printDirectories(dirs) {
+  const list = getListDirectories(dirs)
+
+  document.getElementById('content').innerHTML = ''
+  document.getElementById('content').appendChild(list)
+}
+function deleteDirectory(index, dirs) {
+  const filteredDirs = dirs.filter((dir, i) => i !== index)
+
+  console.log('filteredDirs', filteredDirs, dirs)
+
+  chrome.storage.sync.set({
+    projectWorkingDirs: filteredDirs
+  })
+
+  return filteredDirs
+}
+function getListDirectories(dirs) {
+  const ul = document.createElement('ul')
+
+  dirs.forEach((dir, index) => {
+    const li = document.createElement('li')
+    li.addEventListener('click', () => {
+      const updatedDirs = deleteDirectory(index, dirs)
+      printDirectories(updatedDirs)
+    })
+    li.innerText = JSON.stringify(dir, null, 2)
+
+    ul.appendChild(li)
+  })
+
+  return ul
+}

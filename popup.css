@@ -5,3 +5,7 @@ body #actions {
 body.credentials #actions {
   display: block;
 }
+#content ul {
+  list-style: none;
+  padding-left: 0;
+}
