@@ -70,8 +70,6 @@ function printDirectories(dirs) {
 function deleteDirectory(index, dirs) {
   const filteredDirs = dirs.filter((dir, i) => i !== index)
 
-  console.log('filteredDirs', filteredDirs, dirs)
-
   chrome.storage.sync.set({
     projectWorkingDirs: filteredDirs
   })

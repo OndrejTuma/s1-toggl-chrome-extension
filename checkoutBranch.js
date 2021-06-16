@@ -46,7 +46,13 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
   let workingDir = getProjectworkingDir(projectId, projectWorkingDirs)
 
   if (!workingDir) {
-    workingDir = prompt('Missing project working dir. Add one:')
+    try {
+      const workingDirHandle = await window.showDirectoryPicker()
+
+      workingDir = workingDirHandle.name
+    } catch (e) {
+      return
+    }
   }
 
   if (!workingDir) {
