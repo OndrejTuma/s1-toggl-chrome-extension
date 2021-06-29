@@ -50,21 +50,17 @@ chrome.storage.sync.get('projectWorkingDirs', async ({ projectWorkingDirs }) => 
       const workingDirHandle = await window.showDirectoryPicker()
 
       workingDir = workingDirHandle.name
+
+      chrome.storage.sync.set({
+        projectWorkingDirs: [
+          ...(projectWorkingDirs || []),
+          { id: projectId, dir: workingDir },
+        ],
+      })
     } catch (e) {
       return
     }
   }
-
-  if (!workingDir) {
-    return
-  }
-
-  chrome.storage.sync.set({
-    projectWorkingDirs: [
-      ...(projectWorkingDirs || []),
-      { id: projectId, dir: workingDir },
-    ],
-  })
 
   const taskNumber = window.location.toString().replace(/^.*issues\/([0-9]+).*$/, '$1')
   const taskSubjectNode = document.getElementById('issue_subject')
